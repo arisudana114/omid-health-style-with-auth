@@ -50,10 +50,10 @@ const LoginScreen = () => {
 		cartState.cart.cartItems.map((item) => {
 			orders.push(
 				item.name +
-					' ' +
+					' - ' +
 					item.quantity +
 					'gr' +
-					' ' +
+					' - ' +
 					item.itemQuantity +
 					'x'
 			);
@@ -120,8 +120,8 @@ const LoginScreen = () => {
 						<p>Continue without login</p>
 						<p className="mb-4">Order by whatsapp</p>
 						<Link
-							href={`https://wa.me/62895331759916?text=Hi I'm ordering these items from the website: ${JSON.stringify(
-								orders
+							href={`https://wa.me/62895331759916?text=Hi I'm ordering these items from the website: ${orders.join(
+								' | '
 							)}`}
 						>
 							<a className="bg-green-500 px-4 rounded-md">
