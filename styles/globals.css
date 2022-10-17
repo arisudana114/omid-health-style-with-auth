@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Noto Sans", sans-serif;
+  background-color: #1e1e1e;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.cart-modal-active {
+  @apply bg-white absolute right-0 top-0 h-[80%] w-full flex flex-col items-center justify-between pt-10 pb-10  ease-in-out duration-500
+}
+
+.cart-modal-inactive {
+  @apply bg-white absolute right-0 top-0 h-0 w-full flex flex-col items-center justify-between pt-10 pb-24 ease-in-out duration-500 opacity-0
+}
+
+input {
+  color: black;
+  padding: 0 0.5rem;
+}
