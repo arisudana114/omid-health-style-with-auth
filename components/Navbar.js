@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import {
 	AiOutlineClose,
 	AiOutlineMenu,
@@ -11,6 +12,10 @@ import CartPopup from './CartPopup';
 const Navbar = ({ status, session }) => {
 	const [nav, setNav] = useState(true);
 	const [cart, setCart] = useState(true);
+
+	const logoutHandler = () => {
+		signOut({ callbackUrl: '/login' });
+	};
 
 	const handleNav = () => {
 		if (!cart) {
@@ -81,7 +86,9 @@ const Navbar = ({ status, session }) => {
 						<>
 							<li>{session.user.name}</li>
 							<li className="mt-2">Orders</li>
-							<li className="mt-2">Log Out</li>
+							<li className="mt-2">
+								<a onClick={logoutHandler}>Log Out</a>
+							</li>
 						</>
 					) : (
 						<Link href={'login'} className="p-2">

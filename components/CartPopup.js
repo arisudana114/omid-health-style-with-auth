@@ -28,7 +28,7 @@ const CartPopup = ({ cart, handleCart }) => {
 			<div
 				className={
 					!cart
-						? 'px-4 pt-4 fixed left-0 top-[4.5rem] text-sm w-[75%] h-[70vh] border-r border-b border-b-green-600 border-r-green-600 bg-[#1e1e1e] z-40 ease-in-out duration-500 overflow-scroll'
+						? 'px-4 pt-4 flex flex-col items-center fixed left-0 top-[4.5rem] text-sm w-[75%] h-[70vh] border-r border-b border-b-green-600 border-r-green-600 bg-[#1e1e1e] z-40 ease-in-out duration-500 overflow-scroll text-center'
 						: 'fixed left-[-100%] h-[70vh] overflow-scroll top-0 ease-in-out duration-500'
 				}
 				onClick={
@@ -87,8 +87,8 @@ const CartPopup = ({ cart, handleCart }) => {
 				<button
 					className={
 						!cart
-							? 'fixed bg-green-600 bottom-[12.3rem] left-[10.9rem] px-4 ease-in-out duration-500 rounded-md'
-							: 'fixed bg-green-600 bottom-[12.3em] -left-[100.5rem] px-4 ease-in-out duration-500 rounded-md'
+							? 'bg-green-500 px-4 ease-in-out duration-500 rounded-md mt-auto mb-4'
+							: 'hidden'
 					}
 					onClick={handleCheckout}
 				>

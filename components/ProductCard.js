@@ -97,10 +97,10 @@ const ProductCard = ({ product }) => {
 					</div>
 				</div>
 				<button
-					className="bg-green-500 text-white px-3 py-1 m-2 rounded-md shadow-md"
+					className="bg-green-500 text-white px-3 py-1 mx-auto mt-2 rounded-md shadow-md w-[90%]"
 					onClick={handleModal}
 				>
-					Choose Quantity
+					Choose Qty
 				</button>
 
 				<div
