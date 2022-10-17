@@ -2,8 +2,12 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSession } from 'next-auth/react';
 
 const Layout = ({ children }) => {
+	const { status, data: session } = useSession();
+
 	return (
 		<>
 			<Head>
@@ -16,7 +20,7 @@ const Layout = ({ children }) => {
 			<ToastContainer position="bottom-center" limit={1} />
 			<div className="flex min-h-screen flex-col justify-between text-white container mx-auto">
 				<header className="sticky top-0 bg-[#1e1e1e] z-50">
-					<Navbar />
+					<Navbar status={status} session={session} />
 				</header>
 				<main>{children}</main>
 				<footer className="flex justify-center items-center mt-auto text-sm">

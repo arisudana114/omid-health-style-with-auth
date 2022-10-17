@@ -40,7 +40,12 @@ const CartPopup = ({ cart, handleCart }) => {
 				{cartState.cart.cartItems.length === 0 ? (
 					<div className="pt-20 text-center">
 						<p>Your cart is empty</p>
-						<button className="bg-green-500 px-4 py-1 rounded-md mt-4">
+						<button
+							onClick={() => {
+								router.push('/');
+							}}
+							className="bg-green-500 px-4 py-1 rounded-md mt-4"
+						>
 							Start shopping
 						</button>
 					</div>

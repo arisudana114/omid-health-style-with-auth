@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ai';
 import CartPopup from './CartPopup';
 
-const Navbar = () => {
+const Navbar = ({ status, session }) => {
 	const [nav, setNav] = useState(true);
 	const [cart, setCart] = useState(true);
 
@@ -75,7 +75,19 @@ const Navbar = () => {
 						width="90%"
 						className="text-white ml-auto mr-auto left-0 top-9 right-0 my-4"
 					/>
-					<li className="p-2">Login</li>
+					{status === 'loading' ? (
+						'Loading'
+					) : session?.user ? (
+						<>
+							<li>{session.user.name}</li>
+							<li className="mt-2">Orders</li>
+							<li className="mt-2">Log Out</li>
+						</>
+					) : (
+						<Link href={'login'} className="p-2">
+							Login
+						</Link>
+					)}
 				</ul>
 			</div>
 			{/* <div className="cart">
