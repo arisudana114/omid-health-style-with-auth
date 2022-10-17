@@ -93,6 +93,19 @@ const LoginScreen = () => {
 						Don&apos;t have an account? &nbsp;
 						<Link href="register">Register</Link>
 					</div>
+					<div className="mt-20 text-center">
+						<p>Continue without login</p>
+						<p className="mb-4">Order by whatsapp</p>
+						<Link
+							href={
+								"https://wa.me/62895331759916?text=Hi I'm ordering these items from the website"
+							}
+						>
+							<a className="bg-green-500 px-4 rounded-md">
+								Click here
+							</a>
+						</Link>
+					</div>
 				</div>
 			</form>
 		</Layout>
