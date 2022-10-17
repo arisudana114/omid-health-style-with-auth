@@ -1,16 +1,19 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import { useRouter } from 'next/router';
+import { Store } from '../utils/Store';
 
 const LoginScreen = () => {
 	const { data: session } = useSession();
 	const router = useRouter();
 	const { redirect } = router.query;
+
+	const { cartState, cartDispatch } = useContext(Store);
 
 	useEffect(() => {
 		if (session?.user) {
@@ -38,6 +41,18 @@ const LoginScreen = () => {
 			toast.error(getError(err));
 		}
 	};
+
+	// console.log(cartState);
+
+	const orders = [];
+
+	{
+		cartState.cart.cartItems.map((item) => {
+			orders.push(item.name, item.quantity, item.itemQuantity);
+		});
+	}
+
+	console.log(JSON.stringify(orders));
 
 	return (
 		<Layout>
@@ -97,9 +112,9 @@ const LoginScreen = () => {
 						<p>Continue without login</p>
 						<p className="mb-4">Order by whatsapp</p>
 						<Link
-							href={
-								"https://wa.me/62895331759916?text=Hi I'm ordering these items from the website"
-							}
+							href={`https://wa.me/62895331759916?text=Hi I'm ordering these items from the website: ${JSON.stringify(
+								orders
+							)}`}
 						>
 							<a className="bg-green-500 px-4 rounded-md">
 								Click here
