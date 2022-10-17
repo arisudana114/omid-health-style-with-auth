@@ -48,11 +48,19 @@ const LoginScreen = () => {
 
 	{
 		cartState.cart.cartItems.map((item) => {
-			orders.push(item.name, item.quantity, item.itemQuantity);
+			orders.push(
+				item.name +
+					' ' +
+					item.quantity +
+					'gr' +
+					' ' +
+					item.itemQuantity +
+					'x'
+			);
 		});
 	}
 
-	console.log(JSON.stringify(orders));
+	console.log(orders.join('\r\n'));
 
 	return (
 		<Layout>
