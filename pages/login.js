@@ -60,7 +60,7 @@ const LoginScreen = () => {
 		});
 	}
 
-	console.log(orders.join('\r\n'));
+	// console.log(orders.join('\r\n'));
 
 	return (
 		<Layout>

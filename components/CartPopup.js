@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../utils/Store';
 import CartItem from './CartItem';
+import dynamic from 'next/dynamic';
 
 const CartPopup = ({ cart, handleCart }) => {
 	const router = useRouter();
@@ -87,7 +88,7 @@ const CartPopup = ({ cart, handleCart }) => {
 				<button
 					className={
 						!cart
-							? 'bg-green-500 px-4 ease-in-out duration-500 rounded-md mt-auto mb-4'
+							? 'primary-button ease-in-out duration-500 mt-auto mb-4'
 							: 'hidden'
 					}
 					onClick={handleCheckout}
@@ -107,4 +108,4 @@ const CartPopup = ({ cart, handleCart }) => {
 	);
 };
 
-export default CartPopup;
+export default dynamic(() => Promise.resolve(CartPopup), { ssr: false });

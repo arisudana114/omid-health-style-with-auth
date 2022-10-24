@@ -27,7 +27,13 @@ a {
   @apply bg-white absolute right-0 top-0 h-0 w-full flex flex-col items-center justify-between pt-10 pb-24 ease-in-out duration-500 opacity-0
 }
 
+.primary-button {			
+  @apply bg-green-500 px-4 rounded-md
+}
+
 input {
   color: black;
   padding: 0 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
 }
