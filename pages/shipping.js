@@ -8,7 +8,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 
-const Shipping = ({ province, city }) => {
+const Shipping = ({ province, city, cost }) => {
 	const {
 		handleSubmit,
 		register,
@@ -64,12 +64,13 @@ const Shipping = ({ province, city }) => {
 		router.push('/payment');
 	};
 
-	// console.log(cost);
 	return (
 		<Layout>
 			<div className="container flex flex-col items-center p-8">
 				<p>Please enter your shipping address</p>
 				<p>And contact information</p>
+
+				<p>{cost}</p>
 
 				<form
 					className="w-full p-4"
@@ -208,24 +209,24 @@ export const getServerSideProps = async () => {
 		headers: { key: 'a1ea1bc419e47ff818a0402eaa05e2ca' },
 	});
 
-	// const cost = await axios.post('https://api.rajaongkir.com/starter/cost', {
-	// 	headers: {
-	// 		key: 'a1ea1bc419e47ff818a0402eaa05e2ca',
-	// 		// 'Content-Type': 'application/x-www-form-urlencoded',
-	// 	},
-	// 	form: {
-	// 		origin: '1',
-	// 		destination: '1',
-	// 		weight: 1700,
-	// 		courier: 'jne',
-	// 	},
-	// });
+	const cost = await axios.post('https://api.rajaongkir.com/starter/cost', {
+		headers: {
+			key: 'a1ea1bc419e47ff818a0402eaa05e2ca',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		form: {
+			origin: '1',
+			destination: '1',
+			weight: 1700,
+			courier: 'jne',
+		},
+	});
 
 	return {
 		props: {
 			province: province.data,
 			city: city.data,
-			// cost: cost.data,
+			cost: cost.data,
 		},
 	};
 };
