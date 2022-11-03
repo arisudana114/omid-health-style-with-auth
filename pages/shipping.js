@@ -5,16 +5,29 @@ import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { getError } from '../utils/error';
 
-const Shipping = ({ province, city, cost }) => {
+const Shipping = ({ province, city }) => {
 	const {
 		handleSubmit,
 		register,
 		formState: { errors },
 		setValue,
 	} = useForm();
+
+	const [destination, setDestination] = useState('115');
+
+	const [costData, setCostData] = useState({});
+
+	const fetchCost = async (event) => {
+		const cost = await axios.post('/api/cost', {
+			origin: '501',
+			destination: event.target.value,
+			weight: 1700,
+			courier: 'jne',
+		});
+		setCostData(cost.data);
+		console.log(costData);
+	};
 
 	const { cartState, cartDispatch } = useContext(Store);
 	const { cart } = cartState;
@@ -64,13 +77,13 @@ const Shipping = ({ province, city, cost }) => {
 		router.push('/payment');
 	};
 
+	// console.log(cost.rajaongkir.results[0].costs);
+
 	return (
 		<Layout>
 			<div className="container flex flex-col items-center p-8">
 				<p>Please enter your shipping address</p>
 				<p>And contact information</p>
-
-				<p>{cost}</p>
 
 				<form
 					className="w-full p-4"
@@ -117,14 +130,20 @@ const Shipping = ({ province, city, cost }) => {
 						name="city"
 						id="city"
 						className="text-black rounded-md mb-2 w-full"
+						{...register('city', {
+							required: 'Please enter city name',
+							minLength: {
+								value: 3,
+								message:
+									'Address should be more than 2 characters',
+							},
+						})}
+						onChange={fetchCost}
 					>
 						<option selected>Please select a province first</option>
 						{filteredCity.map((city) => {
 							return (
-								<option
-									value={city.city_name}
-									key={city.city_id}
-								>
+								<option value={city.city_id} key={city.city_id}>
 									{city.city_name}
 								</option>
 							);
@@ -188,11 +207,20 @@ const Shipping = ({ province, city, cost }) => {
 							</div>
 						)}
 					</div>
+
+					<p>
+						{costData.rajaongkir
+							? costData.rajaongkir.results[0].costs[0].cost[0]
+									.value
+							: ''}
+					</p>
+
 					<div className="text-center mt-4">
 						<button className="primary-button w-full">Next</button>
 					</div>
 				</form>
 			</div>
+			<button onClick={fetchCost}>Make BODY call</button>
 		</Layout>
 	);
 };
@@ -209,24 +237,34 @@ export const getServerSideProps = async () => {
 		headers: { key: 'a1ea1bc419e47ff818a0402eaa05e2ca' },
 	});
 
-	const cost = await axios.post('https://api.rajaongkir.com/starter/cost', {
-		headers: {
-			key: 'a1ea1bc419e47ff818a0402eaa05e2ca',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-		form: {
-			origin: '1',
-			destination: '1',
-			weight: 1700,
-			courier: 'jne',
-		},
-	});
+	// const cost = await fetch('http://localhost:3000/api/cost', {
+	// 	method: 'POST',
+	// 	form: JSON.stringify({
+	// 		origin: '501',
+	// 		destination: '114',
+	// 		weight: 1700,
+	// 		courier: 'jne',
+	// 	}),
+	// 	headers: {
+	// 		key: 'a1ea1bc419e47ff818a0402eaa05e2ca',
+	// 		'content-type': 'application/x-www-form-urlencoded',
+	// 	},
+	// });
+
+	// const costData = await cost.json();
+
+	// const cost = await axios.post('http://localhost:3000/api/cost', {
+	// 	origin: '501',
+	// 	destination: '115',
+	// 	weight: 1700,
+	// 	courier: 'jne',
+	// });
 
 	return {
 		props: {
 			province: province.data,
 			city: city.data,
-			cost: cost.data,
+			// cost: cost.data,
 		},
 	};
 };
