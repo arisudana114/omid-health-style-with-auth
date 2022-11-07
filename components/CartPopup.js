@@ -52,7 +52,7 @@ const CartPopup = ({ cart, handleCart }) => {
 	}, [cartDispatch, cartState.cart.cartItems, cartTotalQuantity]);
 
 	// console.log(cartTotalQuantity);
-	console.log(cartState.cart.cartWeight);
+	// console.log(cartState.cart.cartWeight);
 
 	return (
 		<div>

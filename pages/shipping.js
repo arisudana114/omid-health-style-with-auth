@@ -16,6 +16,8 @@ const Shipping = ({ province, city }) => {
 
 	const [destination, setDestination] = useState('');
 	const [courier, setCourier] = useState('');
+	const [deliveryTypeState, setDeliveryTypeState] = useState('');
+	const [deliveryCostState, setDeliveryCostState] = useState(0);
 
 	const setDestinationHandler = (event) => setDestination(event.target.value);
 	const setCourierHandler = (event) => setCourier(event.target.value);
@@ -75,10 +77,26 @@ const Shipping = ({ province, city }) => {
 		setValue('postalCode', shippingAddress.postalCode);
 	}, [setValue, shippingAddress]);
 
-	const submitHandler = ({ fullName, address, city, postalCode }) => {
+	const submitHandler = ({
+		fullName,
+		address,
+		city,
+		postalCode,
+		deliveryService = courier,
+		deliveryType = deliveryTypeState,
+		deliveryCost = deliveryCostState,
+	}) => {
 		cartDispatch({
 			type: 'SAVE_SHIPPING_ADDRESS',
-			payload: { fullName, address, city, postalCode },
+			payload: {
+				fullName,
+				address,
+				city,
+				postalCode,
+				deliveryService,
+				deliveryType,
+				deliveryCost,
+			},
 		});
 		Cookies.set(
 			'cart',
@@ -89,6 +107,9 @@ const Shipping = ({ province, city }) => {
 					address,
 					city,
 					postalCode,
+					deliveryService,
+					deliveryType,
+					deliveryCost,
 				},
 			})
 		);
@@ -96,8 +117,8 @@ const Shipping = ({ province, city }) => {
 		router.push('/payment');
 	};
 
-	console.log(costData.rajaongkir);
-	console.log(cartState);
+	// console.log(costData.rajaongkir);
+	// console.log(cartState);
 
 	return (
 		<Layout>
@@ -253,11 +274,26 @@ const Shipping = ({ province, city }) => {
 										key={cost.service}
 										className="border-b border-b-white mb-2"
 									>
-										<div className="flex justify-between pr-28">
+										<div className="flex justify-between pr-2">
 											<p>{cost.service}</p>
 											<p>-</p>
 											<p>Rp. {cost.cost[0].value}</p>
+											<button
+												type="button"
+												className="bg-white px-4 rounded-md text-gray-600 focus:bg-green-500 focus:text-white"
+												onClick={() => {
+													setDeliveryTypeState(
+														cost.service
+													);
+													setDeliveryCostState(
+														cost.cost[0].value
+													);
+												}}
+											>
+												Select
+											</button>
 										</div>
+
 										<p>
 											Estimated arrival {cost.cost[0].etd}{' '}
 											days
