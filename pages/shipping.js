@@ -14,22 +14,41 @@ const Shipping = ({ province, city }) => {
 		setValue,
 	} = useForm();
 
-	const [destination, setDestination] = useState('115');
+	const [destination, setDestination] = useState('');
+	const [courier, setCourier] = useState('');
+
+	const setDestinationHandler = (event) => setDestination(event.target.value);
+	const setCourierHandler = (event) => setCourier(event.target.value);
 
 	const [costData, setCostData] = useState({});
 
-	const fetchCost = async (event) => {
-		const cost = await axios.post('/api/cost', {
-			origin: '501',
-			destination: event.target.value,
-			weight: 1700,
-			courier: 'jne',
-		});
-		setCostData(cost.data);
-		console.log(costData);
-	};
-
+	// const fetchCost = async (event) => {
+	// 	const cost = await axios.post('/api/cost', {
+	// 		origin: '153',
+	// 		destination: event.target.value,
+	// 		weight: 1700,
+	// 		courier: 'jne',
+	// 	});
+	// 	setCostData(cost.data);
+	// 	console.log(costData);
+	// };
 	const { cartState, cartDispatch } = useContext(Store);
+
+	useEffect(() => {
+		const fetchCost = async () => {
+			const cost = await axios.post('/api/cost', {
+				origin: '153',
+				destination: destination,
+				weight: cartState.cart.cartWeight,
+				courier: courier,
+			});
+			setCostData(cost.data);
+			// console.log(costData);
+		};
+
+		fetchCost().catch(console.error);
+	}, [cartState.cart.cartWeight, courier, destination]);
+
 	const { cart } = cartState;
 	const { shippingAddress } = cart;
 
@@ -77,7 +96,8 @@ const Shipping = ({ province, city }) => {
 		router.push('/payment');
 	};
 
-	// console.log(cost.rajaongkir.results[0].costs);
+	console.log(costData.rajaongkir);
+	console.log(cartState);
 
 	return (
 		<Layout>
@@ -125,7 +145,7 @@ const Shipping = ({ province, city }) => {
 							);
 						})}
 					</select>
-					<label htmlFor="province">Select City</label>
+					<label htmlFor="city">Select City</label>
 					<select
 						name="city"
 						id="city"
@@ -138,7 +158,7 @@ const Shipping = ({ province, city }) => {
 									'Address should be more than 2 characters',
 							},
 						})}
-						onChange={fetchCost}
+						onChange={setDestinationHandler}
 					>
 						<option selected>Please select a province first</option>
 						{filteredCity.map((city) => {
@@ -207,20 +227,52 @@ const Shipping = ({ province, city }) => {
 							</div>
 						)}
 					</div>
+					<div>
+						<label htmlFor="city">Select Delivery Service</label>
+						<select
+							className="text-black rounded-md mb-2 w-1/2"
+							onChange={setCourierHandler}
+						>
+							<option selected>Choose one</option>
+							<option value="jne">JNE</option>
+							<option value="pos">POS Indonesia</option>
+							<option value="tiki">TIKI</option>
+						</select>
+					</div>
 
-					<p>
+					{/* <p>
 						{costData.rajaongkir
 							? costData.rajaongkir.results[0].costs[0].cost[0]
 									.value
 							: ''}
-					</p>
+					</p> */}
+					{costData.rajaongkir && courier
+						? costData.rajaongkir.results[0].costs.map((cost) => {
+								return (
+									<div
+										key={cost.service}
+										className="border-b border-b-white mb-2"
+									>
+										<div className="flex justify-between pr-28">
+											<p>{cost.service}</p>
+											<p>-</p>
+											<p>Rp. {cost.cost[0].value}</p>
+										</div>
+										<p>
+											Estimated arrival {cost.cost[0].etd}{' '}
+											days
+										</p>
+									</div>
+								);
+						  })
+						: null}
 
 					<div className="text-center mt-4">
 						<button className="primary-button w-full">Next</button>
 					</div>
 				</form>
 			</div>
-			<button onClick={fetchCost}>Make BODY call</button>
+			{/* <button onClick={fetchCost}>Make BODY call</button> */}
 		</Layout>
 	);
 };

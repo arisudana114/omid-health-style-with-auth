@@ -7,13 +7,31 @@ import dynamic from 'next/dynamic';
 const CartPopup = ({ cart, handleCart }) => {
 	const router = useRouter();
 
+	const { cartState, cartDispatch } = useContext(Store);
+
 	const handleCheckout = () => {
 		router.push('login?redirect=/shipping');
 	};
 
-	const { cartState, cartDispatch } = useContext(Store);
+	// const addToCartHandler = () => {
+	// 	const existItem = cartState.cart.cartItems.find(
+	// 		(x) => x.slug === item.slug && x.price === item.price
+	// 	);
+	// 	const itemQuantity = existItem ? existItem.itemQuantity + 1 : 1;
+	// 	cartDispatch({
+	// 		type: 'CART_ADD_ITEM',
+	// 		payload: {
+	// 			...item,
+	// 			price: item.price,
+	// 			quantity: item.quantity,
+	// 			itemQuantity,
+	// 		},
+	// 	});
+	// };
 
 	const [cartTotal, setcartTotal] = useState(0);
+
+	const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
 	// console.log(cartState.cart.cartItems.length);
 	useEffect(() => {
@@ -21,8 +39,20 @@ const CartPopup = ({ cart, handleCart }) => {
 			(total, item) => total + item.price * item.itemQuantity,
 			0
 		);
+		const newCartTotalQuantity = cartState.cart.cartItems.reduce(
+			(total, item) => total + item.quantity * item.itemQuantity,
+			0
+		);
 		setcartTotal(newCartTotal);
-	}, [cartState.cart.cartItems]);
+		setCartTotalQuantity(newCartTotalQuantity);
+		cartDispatch({
+			type: 'SAVE_SHIPPING_WEIGHT',
+			payload: cartTotalQuantity,
+		});
+	}, [cartDispatch, cartState.cart.cartItems, cartTotalQuantity]);
+
+	// console.log(cartTotalQuantity);
+	console.log(cartState.cart.cartWeight);
 
 	return (
 		<div>

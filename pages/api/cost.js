@@ -3,9 +3,9 @@ export default async function handler(req, res) {
 	var qs = require('qs');
 	var data = qs.stringify({
 		origin: '501',
-		destination: req.body.destination,
-		weight: '1700',
-		courier: req.body.courier,
+		destination: req.body.destination ? req.body.destination : '501',
+		weight: req.body.weight ? req.body.weight : '1000',
+		courier: req.body.courier ? req.body.courier : 'jne',
 	});
 	var config = {
 		method: 'post',
