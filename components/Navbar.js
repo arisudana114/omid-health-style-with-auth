@@ -35,6 +35,8 @@ const Navbar = ({ status, session }) => {
 		}
 	};
 
+	// console.log(session);
+
 	return (
 		<>
 			<div className="flex justify-between items-center p-4 relative h-[4.5rem]">
@@ -59,6 +61,9 @@ const Navbar = ({ status, session }) => {
 					<li className="p-2">Products</li>
 					<li className="p-2">About Us</li>
 					<li className="p-2">Contacts</li>
+					{session?.user.isAdmin && (
+						<li className="p-2">Admin Dashboard</li>
+					)}
 				</ul>
 				<div onClick={handleNav} className="z-50">
 					{!nav ? <AiOutlineClose /> : <AiOutlineMenu />}
@@ -76,6 +81,9 @@ const Navbar = ({ status, session }) => {
 					<li className="p-2">Products</li>
 					<li className="p-2">About Us</li>
 					<li className="p-2">Contacts</li>
+					{session?.user.isAdmin && (
+						<li className="p-2">Admin Dashboard</li>
+					)}
 					<hr
 						width="90%"
 						className="text-white ml-auto mr-auto left-0 top-9 right-0 my-4"
@@ -84,15 +92,15 @@ const Navbar = ({ status, session }) => {
 						'Loading'
 					) : session?.user ? (
 						<>
-							<li>{session.user.name}</li>
-							<li className="mt-2">Orders</li>
-							<li className="mt-2">
+							<li className="p-2">{session.user.name}</li>
+							<li className="p-2">Orders</li>
+							<li className="p-2">
 								<a onClick={logoutHandler}>Log Out</a>
 							</li>
 						</>
 					) : (
-						<Link href={'login'} className="p-2">
-							Login
+						<Link href={'login'}>
+							<li className="p-2">Login</li>
 						</Link>
 					)}
 				</ul>

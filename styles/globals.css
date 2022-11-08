@@ -24,7 +24,7 @@ a {
 }
 
 .cart-modal-inactive {
-  @apply bg-white absolute right-0 top-0 h-0 w-full flex flex-col items-center justify-between pt-10 pb-24 ease-in-out duration-500 opacity-0
+  @apply bg-white absolute right-0 top-0 h-0 w-full flex flex-col items-center justify-between pt-10 pb-24 ease-in-out duration-500 opacity-0 -z-10
 }
 
 .primary-button {			

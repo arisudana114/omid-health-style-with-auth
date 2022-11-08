@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useReducer, useState, useContext } from 'react';
 import { Store } from '../utils/Store';
 
@@ -62,14 +63,19 @@ const ProductCard = ({ product }) => {
 			) : (
 				<p className="opacity-0">no discount</p>
 			)}
+
 			<div className="bg-white text-black text-center p-1 rounded-md relative w-full h-full overflow-hidden z-0">
 				<div className={cardModal ? 'opacity-0' : ''}>
-					<Image
-						src={product.image[0]}
-						alt={product.slug}
-						width={200}
-						height={200}
-					/>
+					<Link href={`/product/${product.slug}`} className="z-40">
+						<a>
+							<Image
+								src={product.image[0]}
+								alt={product.slug}
+								width={200}
+								height={200}
+							/>
+						</a>
+					</Link>
 
 					<div className="flex flex-col justify-between">
 						<p>{product.name}</p>
