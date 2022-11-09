@@ -4,6 +4,36 @@ import React, { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 
+import { Bar } from 'react-chartjs-2';
+
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend,
+} from 'chart.js';
+
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend
+);
+
+export const options = {
+	responsive: true,
+	plugins: {
+		legend: {
+			position: 'top',
+		},
+	},
+};
+
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'FETCH_REQUEST':
@@ -43,22 +73,40 @@ const AdminDashboardScreen = () => {
 		fetchData();
 	}, []);
 
+	const data = {
+		labels: summary.salesData.map((label) => label.id),
+		datasets: [
+			{
+				label: 'Sales',
+				backgroundColor: 'rgba(162, 222, 208, 1)',
+				data: summary.salesData.map((data) => data.totalSales),
+			},
+		],
+	};
 	return (
 		<Layout>
 			<div className="grid grid-cols-4 gap-5 p-4">
 				<div>
 					<ul>
 						<li>
-							<a className="font-bold">Dashboard</a>
+							<Link href="/admin/dashboard">
+								<a className="font-bold">Dashboard</a>
+							</Link>
 						</li>
 						<li>
-							<a>Orders</a>
+							<Link href="/admin/orders">
+								<a>Orders</a>
+							</Link>
 						</li>
 						<li>
-							<a>Products</a>
+							<Link href="/admin/products">
+								<a>Products</a>
+							</Link>
 						</li>
 						<li>
-							<a>Users</a>
+							<Link href="/admin/users">
+								<a>Users</a>
+							</Link>
 						</li>
 					</ul>
 				</div>
@@ -80,7 +128,7 @@ const AdminDashboardScreen = () => {
 								</div>
 								<div className="card m-5 p-5">
 									<p className="text-3xl">
-										${summary.ordersCount}
+										{summary.ordersCount}
 									</p>
 									<p>Orders</p>
 									<Link href="/admin/orders">
@@ -89,7 +137,7 @@ const AdminDashboardScreen = () => {
 								</div>
 								<div className="card m-5 p-5">
 									<p className="text-3xl">
-										${summary.productsCount}
+										{summary.productsCount}
 									</p>
 									<p>Products</p>
 									<Link href="/admin/orders">
@@ -98,12 +146,22 @@ const AdminDashboardScreen = () => {
 								</div>
 								<div className="card m-5 p-5">
 									<p className="text-3xl">
-										${summary.usersCount}
+										{summary.usersCount}
 									</p>
 									<p>Users</p>
 									<Link href="/admin/orders">View users</Link>
 								</div>
 							</div>
+							<h2 className="text-xl">Sales Report</h2>
+							<Bar
+								options={{
+									legend: {
+										display: true,
+										position: 'right',
+									},
+								}}
+								data={data}
+							/>
 						</div>
 					)}
 				</div>

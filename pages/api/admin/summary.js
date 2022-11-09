@@ -16,6 +16,35 @@ const handler = async (req, res) => {
 	const ordersCount = await Order.countDocuments();
 	const productsCount = await Product.countDocuments();
 	const usersCount = await User.countDocuments();
+
+	const ordersPriceGroup = await Order.aggregate([
+		{
+			$group: {
+				_id: null,
+				sales: { $sum: '$itemsPrice' },
+			},
+		},
+	]);
+	const ordersPrice =
+		ordersPriceGroup.length > 0 ? ordersPriceGroup[0].sales : 0;
+
+	const salesData = await Order.aggregate([
+		{
+			$group: {
+				_id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
+				totalSales: { $sum: '$itemsPrice' },
+			},
+		},
+	]);
+
+	await db.disconnect();
+	res.send({
+		ordersCount,
+		productsCount,
+		usersCount,
+		ordersPrice,
+		salesData,
+	});
 };
 
 export default handler;
