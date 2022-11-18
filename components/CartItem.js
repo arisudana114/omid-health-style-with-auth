@@ -68,17 +68,17 @@ const CartItem = ({
 					</div>
 					<p>{quantity} gr</p>
 					<p>Rp. {price}</p>
-					<div className="flex justify-between w-full md:w-3/4">
+					<div className="flex justify-between items-center w-full m-2 md:w-3/4">
 						<button
 							onClick={reduceFromCartHandler}
-							className="bg-green-500 px-4"
+							className="font-bold text-gray-700 rounded-full bg-green-500 flex items-center justify-center font-mono w-[2rem] h-[2rem]"
 						>
 							&#8722;
 						</button>
 						<p>x {itemQuantity}</p>
 						<button
 							onClick={addToCartHandler}
-							className="bg-green-500 px-4"
+							className="font-bold text-gray-700 rounded-full bg-green-500 flex items-center justify-center font-mono w-[2rem] h-[2rem]"
 						>
 							&#43;
 						</button>

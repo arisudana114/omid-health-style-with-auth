@@ -59,8 +59,8 @@ const CartPopup = ({ cart, handleCart }) => {
 			<div
 				className={
 					!cart
-						? 'sm:cart-popup-sm md:bg-[#1e1e1e] fixed top-[4rem] left-[10.5rem] w-[25vw] h-[80vh] border-r border-b border-b-green-600 border-r-green-600  ease-in-out duration-500 overflow-scroll scrollbar-hide text-center'
-						: 'sm:cart-popup-sm-hidden md:bg-[#1e1e1e] fixed -top-[100%] w-[0vw] h-[0vh] border-r border-b border-b-green-600 border-r-green-600 text-center opacity-0 ease-in-out duration-500'
+						? 'sm:cart-popup-sm md:bg-[#1e1e1e] fixed top-[4rem] left-[5.5rem] w-[25vw] h-[80vh] border-r border-b border-b-green-600 border-r-green-600  ease-in-out duration-500 overflow-scroll scrollbar-hide text-center lg:left-[10.5rem]'
+						: 'sm:cart-popup-sm-hidden md:bg-[#1e1e1e] fixed -top-[100%] w-[0vw] h-[0vh] border-r border-b border-b-green-600 border-r-green-600 text-center opacity-0 ease-in-out duration-500 overflow-scroll scrollbar-hide '
 				}
 				onClick={
 					cartState.cart.cartItems.length === 0
