@@ -123,95 +123,101 @@ const Shipping = ({ province, city }) => {
 	return (
 		<Layout>
 			<div className="container flex flex-col items-center p-8">
-				<p>Please enter your shipping address</p>
-				<p>And contact information</p>
+				<div className="md:w-[30%]">
+					<p>Please enter your shipping address</p>
+					<p>And contact information</p>
 
-				<form
-					className="w-full p-4"
-					onSubmit={handleSubmit(submitHandler)}
-				>
-					<div>
-						<label htmlFor="fullName">Full Name</label>
-						<input
-							className="w-full"
-							id="fullName"
-							type="text"
-							autoFocus
-							{...register('fullName', {
-								required: 'Please enter full name',
+					<form
+						className="w-full p-4"
+						onSubmit={handleSubmit(submitHandler)}
+					>
+						<div>
+							<label htmlFor="fullName">Full Name</label>
+							<input
+								className="w-full"
+								id="fullName"
+								type="text"
+								autoFocus
+								{...register('fullName', {
+									required: 'Please enter full name',
+								})}
+							/>
+							{errors.fullName && (
+								<div className="text-red-500">
+									{errors.fullName.message}
+								</div>
+							)}
+						</div>
+						<label htmlFor="province">Select Province</label>
+						<select
+							name="province"
+							id="province"
+							className="text-black rounded-md mb-2 w-full"
+							onChange={provinceHandler}
+						>
+							<option selected>Please select a province</option>
+							{province.rajaongkir.results.map((province) => {
+								return (
+									<option
+										value={province.province_id}
+										key={province.province.id}
+									>
+										{province.province}
+									</option>
+								);
 							})}
-						/>
-						{errors.fullName && (
-							<div className="text-red-500">
-								{errors.fullName.message}
-							</div>
-						)}
-					</div>
-					<label htmlFor="province">Select Province</label>
-					<select
-						name="province"
-						id="province"
-						className="text-black rounded-md mb-2 w-full"
-						onChange={provinceHandler}
-					>
-						<option selected>Please select a province</option>
-						{province.rajaongkir.results.map((province) => {
-							return (
-								<option
-									value={province.province_id}
-									key={province.province.id}
-								>
-									{province.province}
-								</option>
-							);
-						})}
-					</select>
-					<label htmlFor="city">Select City</label>
-					<select
-						name="city"
-						id="city"
-						className="text-black rounded-md mb-2 w-full"
-						{...register('city', {
-							required: 'Please enter city name',
-							minLength: {
-								value: 3,
-								message:
-									'Address should be more than 2 characters',
-							},
-						})}
-						onChange={setDestinationHandler}
-					>
-						<option selected>Please select a province first</option>
-						{filteredCity.map((city) => {
-							return (
-								<option value={city.city_id} key={city.city_id}>
-									{city.city_name}
-								</option>
-							);
-						})}
-					</select>
-					<div>
-						<label htmlFor="address">Address</label>
-						<textarea
-							className="w-full rounded-lg h-20 p-2 text-black"
-							id="address"
-							type="text"
-							{...register('address', {
-								required: 'Please enter address',
+						</select>
+						<label htmlFor="city">Select City</label>
+						<select
+							name="city"
+							id="city"
+							className="text-black rounded-md mb-2 w-full"
+							{...register('city', {
+								required: 'Please enter city name',
 								minLength: {
 									value: 3,
 									message:
 										'Address should be more than 2 characters',
 								},
 							})}
-						/>
-						{errors.address && (
-							<div className="text-red-500">
-								{errors.address.message}
-							</div>
-						)}
-					</div>
-					{/* <div>
+							onChange={setDestinationHandler}
+						>
+							<option selected>
+								Please select a province first
+							</option>
+							{filteredCity.map((city) => {
+								return (
+									<option
+										value={city.city_id}
+										key={city.city_id}
+									>
+										{city.city_name}
+									</option>
+								);
+							})}
+						</select>
+						<div>
+							<label htmlFor="address">Address</label>
+							<textarea
+								className="w-full rounded-lg h-20 p-2 text-black"
+								id="address"
+								type="text"
+								{...register('address', {
+									required: 'Please enter address',
+									minLength: {
+										value: 3,
+										message:
+											'Address should be more than 2 characters',
+									},
+								})}
+							/>
+							{errors.address && (
+								<div className="text-red-500">
+									{errors.address.message}
+								</div>
+							)}
+						</div>
+						{/* <div>
 						<label htmlFor="city">City</label>
 						<input
 							className="w-full"
@@ -232,81 +238,91 @@ const Shipping = ({ province, city }) => {
 							</div>
 						)}
 					</div> */}
-					<div>
-						<label htmlFor="postalCode">Postal Code</label>
-						<input
-							className="w-full"
-							id="postalCode"
-							type="text"
-							{...register('postalCode', {
-								required: 'Please input postal code',
-							})}
-						/>
-						{errors.postalCode && (
-							<div className="text-red-500">
-								{errors.postalCode.message}
-							</div>
-						)}
-					</div>
-					<div>
-						<label htmlFor="city">Select Delivery Service</label>
-						<select
-							className="text-black rounded-md mb-2 w-1/2"
-							onChange={setCourierHandler}
-						>
-							<option selected>Choose one</option>
-							<option value="jne">JNE</option>
-							<option value="pos">POS Indonesia</option>
-							<option value="tiki">TIKI</option>
-						</select>
-					</div>
+						<div>
+							<label htmlFor="postalCode">Postal Code</label>
+							<input
+								className="w-full"
+								id="postalCode"
+								type="text"
+								{...register('postalCode', {
+									required: 'Please input postal code',
+								})}
+							/>
+							{errors.postalCode && (
+								<div className="text-red-500">
+									{errors.postalCode.message}
+								</div>
+							)}
+						</div>
+						<div>
+							<label htmlFor="city">
+								Select Delivery Service
+							</label>
+							<select
+								className="text-black rounded-md mb-2 w-1/2"
+								onChange={setCourierHandler}
+							>
+								<option selected>Choose one</option>
+								<option value="jne">JNE</option>
+								<option value="pos">POS Indonesia</option>
+								<option value="tiki">TIKI</option>
+							</select>
+						</div>
 
-					{/* <p>
+						{/* <p>
 						{costData.rajaongkir
 							? costData.rajaongkir.results[0].costs[0].cost[0]
 									.value
 							: ''}
 					</p> */}
-					{costData.rajaongkir && courier
-						? costData.rajaongkir.results[0].costs.map((cost) => {
-								return (
-									<div
-										key={cost.service}
-										className="border-b border-b-white mb-2"
-									>
-										<div className="flex justify-between pr-2">
-											<p>{cost.service}</p>
-											<p>-</p>
-											<p>Rp. {cost.cost[0].value}</p>
-											<button
-												type="button"
-												className="bg-white px-4 rounded-md text-gray-600 focus:bg-green-500 focus:text-white"
-												onClick={() => {
-													setDeliveryTypeState(
-														cost.service
-													);
-													setDeliveryCostState(
-														cost.cost[0].value
-													);
-												}}
+						{costData.rajaongkir && courier
+							? costData.rajaongkir.results[0].costs.map(
+									(cost) => {
+										return (
+											<div
+												key={cost.service}
+												className="border-b border-b-white mb-2"
 											>
-												Select
-											</button>
-										</div>
+												<div className="flex justify-between pr-2">
+													<p>{cost.service}</p>
+													<p>-</p>
+													<p>
+														Rp. {cost.cost[0].value}
+													</p>
+													<button
+														type="button"
+														className="bg-white px-4 rounded-md text-gray-600 focus:bg-green-500 focus:text-white"
+														onClick={() => {
+															setDeliveryTypeState(
+																cost.service
+															);
+															setDeliveryCostState(
+																cost.cost[0]
+																	.value
+															);
+														}}
+													>
+														Select
+													</button>
+												</div>
 
-										<p>
-											Estimated arrival {cost.cost[0].etd}{' '}
-											days
-										</p>
-									</div>
-								);
-						  })
-						: null}
+												<p>
+													Estimated arrival{' '}
+													{cost.cost[0].etd} days
+												</p>
+											</div>
+										);
+									}
+							  )
+							: null}
 
-					<div className="text-center mt-4">
-						<button className="primary-button w-full">Next</button>
-					</div>
-				</form>
+						<div className="text-center mt-4">
+							<button className="primary-button w-full">
+								Next
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 			{/* <button onClick={fetchCost}>Make BODY call</button> */}
 		</Layout>

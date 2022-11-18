@@ -65,7 +65,11 @@ const ProductCard = ({ product }) => {
 			)}
 
 			<div className="bg-white text-black text-center p-1 rounded-md relative w-full h-full overflow-hidden z-0">
-				<div className={cardModal ? 'opacity-0' : ''}>
+				<div
+					className={
+						cardModal ? 'opacity-0 ease-in-out duration-500' : ''
+					}
+				>
 					<Link href={`/product/${product.slug}`} className="z-40">
 						<a>
 							<Image
@@ -94,7 +98,7 @@ const ProductCard = ({ product }) => {
 							</>
 						) : (
 							<>
-								<p className="opacity-0">no discount</p>
+								<p className="opacity-0 text-xs">no discount</p>
 								<p className="text-lg -mb-2">
 									Rp. {product.price[state.priceIndex]}
 								</p>
@@ -119,8 +123,8 @@ const ProductCard = ({ product }) => {
 							<button
 								className={
 									cardModal
-										? 'rounded-sm outline outline-offset-2 outline-gray-500 w-1/2 font-bold'
-										: 'rounded-sm outline outline-offset-2 outline-gray-500 w-1/2 font-bold hidden'
+										? 'rounded-sm outline outline-offset-2 outline-gray-500 w-1/2 font-bold hover:outline-green-500 hover:text-green-500'
+										: 'rounded-sm outline outline-offset-2 outline-gray-500 w-1/2 font-bold'
 								}
 								value={product.quantity.indexOf(quantity)}
 								key={quantity}

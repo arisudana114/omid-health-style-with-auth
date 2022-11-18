@@ -57,9 +57,9 @@ const CartItem = ({
 
 	return (
 		<div>
-			<div className="flex w-full justify-between mb-2 border-b border-b-green-500">
+			<div className="flex w-full md:w-[90%] justify-between mb-2 border-b border-b-green-500">
 				<div className="w-[40%]">
-					<Image src={image} alt={name} width={80} height={80} />
+					<Image src={image} alt={name} width="100%" height="100%" />
 				</div>
 				<div className="flex flex-col items-start w-[60%]">
 					<div className="flex justify-between w-full pr-1">
@@ -68,7 +68,7 @@ const CartItem = ({
 					</div>
 					<p>{quantity} gr</p>
 					<p>Rp. {price}</p>
-					<div className="flex justify-between w-full">
+					<div className="flex justify-between w-full md:w-3/4">
 						<button
 							onClick={reduceFromCartHandler}
 							className="bg-green-500 px-4"

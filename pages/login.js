@@ -61,6 +61,7 @@ const LoginScreen = () => {
 	}
 
 	// console.log(orders.join('\r\n'));
+	console.log(orders);
 
 	return (
 		<Layout>

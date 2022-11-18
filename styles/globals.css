@@ -20,12 +20,16 @@ a {
 }
 
 .cart-modal-active {
-  @apply bg-white absolute right-0 top-0 h-[75%] w-full flex flex-col items-center justify-between pt-10 pb-10  ease-in-out duration-500
+  @apply bg-white absolute right-0 top-0 h-[75%] w-full flex flex-col items-center justify-between pt-10 pb-10 ease-in-out duration-500
 }
 
 .cart-modal-inactive {
-  @apply bg-white absolute right-0 top-0 h-0 w-full flex flex-col items-center justify-between pt-10 pb-24 ease-in-out duration-500 opacity-0 -z-10
+  @apply bg-white absolute right-[-100%] top-0 h-[75%] w-full flex flex-col items-center justify-between pt-10 pb-10 ease-in-out duration-500
 }
+
+/* .cart-modal-inactive {
+  @apply bg-white absolute right-40 top-0 h-[75%] w-full flex flex-col items-center justify-between pt-10 pb-10 ease-in-out duration-500 opacity-0 -z-10
+} */
 
 .primary-button {			
   @apply bg-green-500 px-4 rounded-md
@@ -37,6 +41,22 @@ a {
 
 .alert-success {
   @apply my-3 rounded-lg bg-red-100 p-3 text-green-700
+}
+
+.cart-popup-sm {
+  @apply px-4 pt-4 flex flex-col items-center fixed left-0 top-[4.5rem] text-sm w-[75%] h-[70vh] border-r border-b border-b-green-600 border-r-green-600 bg-[#1e1e1e] z-40 ease-in-out duration-500 overflow-scroll text-center
+}
+
+.cart-popup-sm-hidden {
+  @apply fixed left-[-100%] h-[70vh] overflow-scroll top-0 ease-in-out duration-500
+}
+
+.cart-popup-outer-sm {
+  @apply px-4 pt-4 fixed right-0 top-[4.5rem] text-sm w-[25%] h-[70vh] z-40 ease-in-out duration-500 overflow-scroll
+}
+
+.cart-popup-outer-sm-hidden {
+  @apply fixed left-[-100%] h-[70vh] overflow-scroll top-0 ease-in-out duration-500
 }
 
 input {

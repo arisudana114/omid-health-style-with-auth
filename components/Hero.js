@@ -13,9 +13,9 @@ const Hero = () => {
 
 	return (
 		<>
-			<div className="flex flex-col items-center">
-				<p className="text-sm">Welcome to</p>
-				<h1 className="text-2xl mb-2">Omid Health Style</h1>
+			<div className="flex flex-col items-center md:mt-20">
+				<p className="text-sm md:text-xl">Welcome to</p>
+				<h1 className="text-2xl mb-2 md:text-4xl">Omid Health Style</h1>
 				<div className="flex relative w-3/4 md:w-1/2">
 					<div className="absolute left-2 top-1 pt-[0.1rem]">
 						<MagnifierIcon />

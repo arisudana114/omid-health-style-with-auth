@@ -59,8 +59,8 @@ const CartPopup = ({ cart, handleCart }) => {
 			<div
 				className={
 					!cart
-						? 'px-4 pt-4 flex flex-col items-center fixed left-0 top-[4.5rem] text-sm w-[75%] h-[70vh] border-r border-b border-b-green-600 border-r-green-600 bg-[#1e1e1e] z-40 ease-in-out duration-500 overflow-scroll text-center'
-						: 'fixed left-[-100%] h-[70vh] overflow-scroll top-0 ease-in-out duration-500'
+						? 'sm:cart-popup-sm md:bg-[#1e1e1e] fixed top-[4rem] left-[10.5rem] w-[25vw] h-[80vh] border-r border-b border-b-green-600 border-r-green-600  ease-in-out duration-500 overflow-scroll scrollbar-hide text-center'
+						: 'sm:cart-popup-sm-hidden md:bg-[#1e1e1e] fixed -top-[100%] w-[0vw] h-[0vh] border-r border-b border-b-green-600 border-r-green-600 text-center opacity-0 ease-in-out duration-500'
 				}
 				onClick={
 					cartState.cart.cartItems.length === 0
@@ -86,8 +86,38 @@ const CartPopup = ({ cart, handleCart }) => {
 				<div>
 					{cartState.cart.cartItems.length >= 1 ? (
 						<div className="text-center mb-4 border-b border-b-green-400">
+							<p className="text-xs mt-4">
+								Shop for more than Rp. 1,000,000
+							</p>
+							<p className="text-xs mb-4">to get 5% discount</p>
 							<p>Your total purchase is</p>
-							<p>Rp. {cartTotal}</p>
+							{cartTotal < 1000000 ? (
+								<p>Rp. {cartTotal}</p>
+							) : (
+								<>
+									<p className="text-xs">
+										<s>Rp. {cartTotal}</s>
+									</p>
+									<p>
+										Rp. {cartTotal - (cartTotal * 5) / 100}{' '}
+									</p>
+								</>
+							)}
+
+							{cartState.cart.cartItems.length >= 1 ? (
+								<button
+									className={
+										!cart
+											? 'primary-button ease-in-out duration-500 mt-auto mb-4 md:my-4'
+											: 'hidden'
+									}
+									onClick={handleCheckout}
+								>
+									CHECKOUT
+								</button>
+							) : (
+								''
+							)}
 						</div>
 					) : (
 						''
@@ -115,22 +145,12 @@ const CartPopup = ({ cart, handleCart }) => {
 						);
 					})}
 				</div>
-				<button
-					className={
-						!cart
-							? 'primary-button ease-in-out duration-500 mt-auto mb-4'
-							: 'hidden'
-					}
-					onClick={handleCheckout}
-				>
-					CHECKOUT
-				</button>
 			</div>
 			<div
 				className={
 					!cart
-						? 'px-4 pt-4 fixed right-0 top-[4.5rem] text-sm w-[25%] h-[70vh] z-40 ease-in-out duration-500 overflow-scroll'
-						: 'fixed left-[-100%] h-[70vh] overflow-scroll top-0 ease-in-out duration-500'
+						? 'sm:cart-popup-outer-sm md:hidden'
+						: 'sm:cart-popup-outer-sm-hidden'
 				}
 				onClick={handleCart}
 			></div>
